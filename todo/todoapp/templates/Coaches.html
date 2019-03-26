@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+    <form name= "loginform"  id= "formoid" action= "/login" method="POST">
+    {% csrf_token %}
+<h1>UserName:<input type="text" name="username" id="username"></h1><br>
+<h1>Password:<input type="password" name="password" id="password"></h1><br>
+<input type="submit" value="Login"/>
+    </form>
+  <script type='text/javascript'>
+  /* attach a submit handler to the form */
+  $("#formoid").submit(function(event) {
+     event.preventDefault();
+     var postData = { username: $('#username').val(), password: $('#password').val() };
+
+     $.ajax({
+          type: "POST",
+          url: "/login",
+          data: JSON.stringify(postData),
+          dataType: 'json',
+          contentType: "application/json;charset=UTF-8",
+          success: function(responseData, textStatus, jqXHR){
+              if(responseData == '200'){
+                   document.location.href= '/index/';
+              }else{
+                   alert('Invalid username or password');
+              }
+              },
+              error: function(jqXHR, textStatus, errorThrown) {
+                  console.log(errorThrown);
+                  }
+         });
+    });
+</script>
+</center>
+</body>
+</html>
