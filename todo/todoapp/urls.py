@@ -6,6 +6,6 @@ app_name = 'todoapp'
 
 urlpatterns = [
     url(r'^index/$', views.index, name='index'),
-    url(r'^$', views.CoachesPageView.as_view()),
-    url(r'^login', views.login),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^user_login/$', views.user_login, name='user_login'),
 ]

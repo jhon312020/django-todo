@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.conf.urls import url, include
 from todoapp import views
 
+
 urlpatterns = [
     url('admin/', admin.site.urls),
-    url(r'^index/', views.index, name='index'),
     url(r'^todoapp/', include('todoapp.urls')),
-    url(r'^$', views.CoachesPageView.as_view()),
-    url(r'^login', views.login),
+    url(r'^index/$', views.index, name='index'),
+    url(r'^$', views.Coaches, name='Coaches'),
+    url(r'^special/', views.special, name='special'),
+    url(r'^logout/$', views.user_logout, name='logout'),
 ]

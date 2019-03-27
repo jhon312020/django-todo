@@ -1,29 +1,67 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
-import json
+from todoapp.forms import UserForm
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, get_user_model
 
 
-class CoachesPageView(TemplateView):
-    template_name = "Coaches.html"
+def Coaches(request):
+    return render(request, 'Coaches.html')
 
 
 def index(request):
     return render(request, 'index.html')
 
 
-@api_view(["POST"])
-def login(req):
-    try:
-        login_details = json.loads(req.body)
-        username = login_details.get('username')
-        password = login_details.get('password')
-        if(username=='admin' and password=='12345'):
-            return Response(status.HTTP_200_OK)
+@login_required
+def special(request):
+    return HttpResponse("You are logged in !")
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('Coaches'))
+
+
+def register(request):
+    registered = False
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
+            user.set_password(user.password)
+            user.save()
+            registered = True
         else:
-            return Response(status.HTTP_400_BAD_REQUEST)
-            #return JsonResponse('Incorrect User name or Password ', safe=False)
-    except ValueError as e:
-        return Response(e.args[0], status.HTTP_400_BAD_REQUEST)
+            print(user_form.errors)
+    else:
+        user_form = UserForm()
+    return render(request, 'registration.html',
+                  {'user_form': user_form,
+                   'registered': registered})
+
+
+def user_login(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        try:
+            user = authenticate(request, username=email, password=password)
+            if user:
+                login(request, user)
+                return HttpResponseRedirect(reverse('Coaches'))
+            else:
+                if user.is_active:
+                    return HttpResponse("Your account was inactive.")
+        except:
+            print("Someone tried to login and failed.")
+            print("They used email: {} and password: {}".format(email, password))
+            return HttpResponse("Invalid login details given")
+
+    return render(request, 'login.html', {})

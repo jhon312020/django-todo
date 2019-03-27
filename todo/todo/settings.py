@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'todo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Todo',
+        'NAME': 'Todo_db',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -122,7 +122,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
+LOGIN_URL = '/todoapp/user_login/'
 STATIC_URL = '/static/'
 
-
+AUTHENTICATION_BACKENDS = ['todoapp.backends.EmailBackend', ]
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+AUTH_USER_MODEL = 'todoapp.User'
