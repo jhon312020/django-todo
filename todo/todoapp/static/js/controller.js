@@ -15,6 +15,7 @@
 
 		self.view.bind('newTodo', function (title) {
 			self.addItem(title);
+			addItemTodo(title);
 		});
 
 		self.view.bind('itemEdit', function (item) {
@@ -268,3 +269,26 @@
 	window.app = window.app || {};
 	window.app.Controller = Controller;
 })(window);
+
+
+function addItemTodo(listItem){
+        var postData = { taskname:listItem, status:'Active' };
+        $.ajax({
+            type: "POST",
+            url: "/addtodo",
+            data: JSON.stringify(postData),
+            dataType:'json',
+            contentType: "application/json;charset=UTF-8",
+            success: function(responseData, textStatus, jqXHR) {
+            if(textStatus == 'success'){
+                     alert('Success');
+                }else{
+                    print('Invalid');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+
+}

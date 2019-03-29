@@ -6,12 +6,14 @@
       {% if registered %}
         <h1>Thank you for registering!</h1>
       {% else %}
-        <h1>Register Here</h1>
-        <h3>Just fill out the form.</h3>
+        <h3>Register Here</h3>
+        <h6>Just fill out the form.</h6>
 <form enctype="multipart/form-data" method="POST">
-          {% csrf_token %}
+                  {% csrf_token %}
           {{ user_form.as_p }}
+
           <input type="submit" name="" value="Register">
+
         </form>
         
       {% endif %}

@@ -25,4 +25,5 @@ urlpatterns = [
     url(r'^$', views.Coaches, name='Coaches'),
     url(r'^special/', views.special, name='special'),
     url(r'^logout/$', views.user_logout, name='logout'),
+    url(r'^addtodo', views.addtodo),
 ]

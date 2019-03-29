@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
 {% block body_block %}
+<center>
   <div class="container">
     <div class="jumbotron">
-      <h1>Login here :</h1>
-<form method="post" action="{% url 'todoapp:user_login' %}">
-          {% csrf_token %}
-          {# A more "HTML" way of creating the login form#}
-          <label for="email">User email:</label>
-          <input type="text" name="email" placeholder="user email">
-<label for="password">Password:</label>
-          <input type="password" name="password" placeholder="Password">
-<input type="submit" name="" value="Login">
-<a href="{% url 'todoapp:register' %}">Sign Up</a>
-</form>
+      <h2>Login</h2><br><br>
+
+
+        <form method="post" action="{% url 'todoapp:user_login' %}">
+        <table>
+            <tr>{% csrf_token %}</tr>
+            <tr>{# A more "HTML" way of creating the login form#}</tr>
+            <tr><label for="email">User email:&nbsp&nbsp</label></tr>
+            <tr><input type="text" name="email" placeholder="user email"/></tr><br><br>
+            <tr><label for="password">Password:&nbsp&nbsp</label></tr>
+            <tr><input type="password" name="password" placeholder="Password"/></tr><br><br>
+            <tr><input type="submit" name="" value="Login"></tr>
+
+        </table>
+        </form>
 </div>
   </div>
+    </center>
 {% endblock %}

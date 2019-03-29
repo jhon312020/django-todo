@@ -3,10 +3,8 @@ from django import forms
 from todoapp.models import User
 
 
-
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
 
     class Meta:
         model = User
-        fields = ('Name', 'email', 'password', 'districtname')
+        fields = ('Name', 'email', 'password')
