@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^special/', views.special, name='special'),
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^addtodo', views.addtodo),
+    url(r'^messages/', include('postman.urls')),
 ]
+

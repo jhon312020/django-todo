@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, get_user_model
-from todoapp.models import User
 
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -53,6 +53,7 @@ def register(request):
 
 
 def user_login(request):
+
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
@@ -80,6 +81,7 @@ def addtodo(request):
         print(login_details)
         id = login_details.get('id', None)
         taskname = login_details.get('taskname', None)
+        print(taskname)
         status1 = login_details.get('status', None)
         todo = Todolist()
         todo.taskname = taskname
@@ -88,5 +90,7 @@ def addtodo(request):
         print(todo.status)
         print(todo.taskname)
         print('****')
+        import pdb; pdb.set_trace()
         todo.save()
+
     return Response({'key': 'value'}, status=status.HTTP_200_OK)
